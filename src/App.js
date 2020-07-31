@@ -58,7 +58,7 @@ function App() {
           handleZipChange={handleZipChange}
           city={forecast.city || ""}
         />
-        <Forecast forecastList={forecast.list}/>
+        <Forecast forecastList={forecast.list} preferences={{userTemperature, userHumidity, userWind}}/>
       </div>
     </div>
   );

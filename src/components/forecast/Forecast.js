@@ -1,7 +1,7 @@
 import React from "react";
 import Day from "./Day";
 
-function Forecast({forecastList}) {
+function Forecast({forecastList, preferences}) {
 
   /**
    * Returns shortened english weekday IE 'Mon', 'Tue'
@@ -48,10 +48,10 @@ function Forecast({forecastList}) {
   forecastList && console.log(buildDays(forecastList))
   const days = []
   forecastList && buildDays(forecastList).forEach(day => {
-    days.push(<Day key={day.weekday} name={day.weekday} />)
+    days.push(<Day key={day.weekday} name={day.weekday} forecasts={day.forecasts} preferences={preferences}/>)
   });
   return (
-    <div className="forecast">
+    <div className="forecast-list">
       <h3 className="header">Forecast</h3>
       <div className="day-list">
         {days}
