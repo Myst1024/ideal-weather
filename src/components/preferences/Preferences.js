@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Slider from "@material-ui/core/Slider";
 
 function Preferences({
@@ -8,20 +8,28 @@ function Preferences({
   setUserHumidity,
   userWind,
   setUserWind,
+  zip,
+  handleZipChange,
+  city
 }) {
-  const handleChange = (event, newValue, setter) => {
+  const handleSliderChange = (event, newValue, setter) => {
     setter(newValue);
   };
-
   return (
     <div className="preferences">
       <h3 className="header">Preferences</h3>
+      <div className="zipcode">
+        <div className="label">Enter your ZIP code:</div>
+        <div className="sub-label">(US-only, for now)</div>
+        <input type="text" value={zip} onChange={(e) => handleZipChange(e)} autoComplete="section-blue shipping postal-code"></input>
+        <div className="zip-city">{city.name}</div>
+      </div>
       <div className="preferences-slider">
         <div className="label">Temperature (F)</div>
         <Slider
           value={userTemperature}
           valueLabelDisplay="on"
-          onChange={(e, v) => handleChange(e, v, setUserTemperature)}
+          onChange={(e, v) => handleSliderChange(e, v, setUserTemperature)}
           aria-labelledby="range-slider"
         />
       </div>
@@ -31,7 +39,7 @@ function Preferences({
         <Slider
           value={userHumidity}
           valueLabelDisplay="on"
-          onChange={(e, v) => handleChange(e, v, setUserHumidity)}
+          onChange={(e, v) => handleSliderChange(e, v, setUserHumidity)}
           aria-labelledby="range-slider"
         />
       </div>
@@ -41,9 +49,11 @@ function Preferences({
         <Slider
           value={userWind}
           valueLabelDisplay="on"
-          onChange={(e, v) => handleChange(e, v, setUserWind)}
+          onChange={(e, v) => handleSliderChange(e, v, setUserWind)}
           aria-labelledby="range-slider"
         />
+
+        {/* TODO: Add light/dark based on sunrise/set */}
       </div>
     </div>
   );

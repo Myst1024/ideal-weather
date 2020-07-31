@@ -11,6 +11,11 @@ const OPENWEATHER_3HR_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
 /** PUBLIC */
 exports.getForecast = functions.https.onRequest((req, res) => {
+
+    res.header('Content-Type','application/json');
+    res.header('Access-Control-Allow-Origin', 'localhost');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
     if (!req.query.zip) {
         return res.status(422).send('The function must be called with ' +
         'one argument "zip" containing the zip code to query.')
