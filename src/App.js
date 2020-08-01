@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import "./App.css";
 import Header from "./components/header/Header";
 import Preferences from "./components/preferences/Preferences";
@@ -12,18 +12,18 @@ function App() {
   const [zip, setZip] = useState("");
   const [forecast, setForecast] = useState({});
 
-  const WEATHER_ENDPOINT = "https://us-central1-ideal-weather.cloudfunctions.net/getForecast"
+  const WEATHER_ENDPOINT = "/api/getForecast";
 
   function handleZipChange(e) {
     // remove whitespace, limit to 5 digits
     let value = e.target.value.toString().trim();
-    value = value.substr(0,5);
+    value = value.substr(0, 5);
     if (value === zip) {
-      return
+      return;
     }
     let findNonDigit = /[^\d]/;
     if (findNonDigit.exec(value) === null) {
-      setZip(value)
+      setZip(value);
       if (isValidZip(value)) {
         updateForecast(value);
       }
@@ -36,11 +36,11 @@ function App() {
 
   /**
    * Queries OpenWeather API and updates forecast state with response
-   * @param {string} zip 
+   * @param {string} zip
    */
   async function updateForecast(zip) {
-    const res = await axios.get(WEATHER_ENDPOINT, {params: {zip: zip}})
-    setForecast(res.data)
+    const res = await axios.get(WEATHER_ENDPOINT, { params: { zip: zip } });
+    setForecast(res.data);
   }
 
   return (
@@ -58,7 +58,10 @@ function App() {
           handleZipChange={handleZipChange}
           city={forecast.city || ""}
         />
-        <Forecast forecastList={forecast.list} preferences={{userTemperature, userHumidity, userWind}}/>
+        <Forecast
+          forecastList={forecast.list}
+          preferences={{ userTemperature, userHumidity, userWind }}
+        />
       </div>
     </div>
   );
