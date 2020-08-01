@@ -1,4 +1,5 @@
 import React from "react";
+import "./Preferences.scss";
 import Slider from "@material-ui/core/Slider";
 
 function Preferences({
@@ -10,7 +11,7 @@ function Preferences({
   setUserWind,
   zip,
   handleZipChange,
-  city
+  city,
 }) {
   const handleSliderChange = (event, newValue, setter) => {
     setter(newValue);
@@ -21,7 +22,12 @@ function Preferences({
       <div className="zipcode">
         <div className="label">Enter your ZIP code:</div>
         <div className="sub-label">(US-only, for now)</div>
-        <input type="text" value={zip} onChange={(e) => handleZipChange(e)} autoComplete="section-blue shipping postal-code"></input>
+        <input
+          type="text"
+          value={zip}
+          onChange={(e) => handleZipChange(e)}
+          autoComplete="section-blue shipping postal-code"
+        ></input>
         <div className="zip-city">{city.name}</div>
       </div>
       <div className="preferences-slider">
