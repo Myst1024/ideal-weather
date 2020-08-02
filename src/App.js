@@ -6,13 +6,15 @@ import Preferences from "./components/preferences/Preferences";
 import Forecast from "./components/forecast/Forecast";
 
 function App() {
+  const [userRain, setUserRain] = useState([0, 20]);
   const [userTemperature, setUserTemperature] = useState([60, 85]);
   const [userHumidity, setUserHumidity] = useState([0, 80]);
   const [userWind, setUserWind] = useState([0, 18]);
   const [zip, setZip] = useState("");
   const [forecast, setForecast] = useState({});
 
-  const WEATHER_ENDPOINT = "/api/getForecast";
+  const WEATHER_ENDPOINT =
+    "https://us-central1-ideal-weather.cloudfunctions.net/getForecast";
 
   function handleZipChange(e) {
     // remove whitespace, limit to 5 digits
@@ -48,6 +50,8 @@ function App() {
       <Header />
       <div className="body">
         <Preferences
+          userRain={userRain}
+          setUserRain={setUserRain}
           userTemperature={userTemperature}
           setUserTemperature={setUserTemperature}
           userHumidity={userHumidity}
@@ -60,7 +64,7 @@ function App() {
         />
         <Forecast
           forecastList={forecast.list}
-          preferences={{ userTemperature, userHumidity, userWind }}
+          preferences={{ userTemperature, userHumidity, userWind, userRain }}
         />
       </div>
     </div>

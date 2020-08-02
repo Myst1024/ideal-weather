@@ -3,6 +3,8 @@ import "./Preferences.scss";
 import Slider from "@material-ui/core/Slider";
 
 function Preferences({
+  userRain,
+  setUserRain,
   userTemperature,
   setUserTemperature,
   userHumidity,
@@ -17,7 +19,7 @@ function Preferences({
     setter(newValue);
   };
   return (
-    <div className="preferences">
+    <div className="preferences card">
       <h3 className="header">Preferences</h3>
       <div className="zipcode">
         <div className="label">Enter your ZIP code:</div>
@@ -58,9 +60,18 @@ function Preferences({
           onChange={(e, v) => handleSliderChange(e, v, setUserWind)}
           aria-labelledby="range-slider"
         />
-
-        {/* TODO: Add light/dark based on sunrise/set */}
       </div>
+      <div className="preferences-slider">
+        <div className="label">Rain (% Chance)</div>
+
+        <Slider
+          value={userRain}
+          valueLabelDisplay="on"
+          onChange={(e, v) => handleSliderChange(e, v, setUserRain)}
+          aria-labelledby="range-slider"
+        />
+      </div>
+      {/* TODO: Add light/dark based on sunrise/set */}
     </div>
   );
 }

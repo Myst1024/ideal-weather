@@ -1,5 +1,4 @@
 html {
-  height: 100%;
 }
 
 body {
@@ -12,6 +11,12 @@ body {
   //   rgba(251, 245, 64, 35%) 0%,
   //   rgb(0, 189, 255) 100.2%
   // );
+  .card {
+    background-color: white;
+    box-shadow: 0 0 20px 5px #ffffff9c, inset 0 0 7px 0px #00000026;
+    border-radius: 15px;
+    padding: 4px 40px 20px;
+  }
   background-image: radial-gradient(
       circle farthest-corner at 12.3% 19.3%,
       rgba(251, 245, 64, 0.71) 0%,
@@ -22,15 +27,12 @@ body {
       rgba(251, 245, 64, 1) 10%,
       transparent 13%
     );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   padding: 0 5%;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }

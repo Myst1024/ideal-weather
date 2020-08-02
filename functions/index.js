@@ -11,6 +11,7 @@ const OPENWEATHER_3HR_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
 /** PUBLIC */
 exports.getForecast = functions.https.onRequest((req, res) => {
+  functions.logger.info("ran getForecast");
   setHeaders(req, res);
   if (!req.query.zip) {
     return res
@@ -22,20 +23,19 @@ exports.getForecast = functions.https.onRequest((req, res) => {
   }
   const zip = req.query.zip.toString();
 
-  callOpenWeather(zip)
+  return callOpenWeather(zip)
     .then((forecast) => {
       return res.json(forecast);
     })
     .catch(() => {
       return res.status(503).send("Error from Openweather API");
     });
-  functions.logger.info("ran getForecast");
 });
 
 /** PRIVATE */
 
 const setHeaders = function (req, res) {
-  var whitelist = ["http://localhost", "https://ideal-weather.web.app"];
+  var whitelist = ["http://localhost:3000", "https://ideal-weather.web.app"];
   var origin = req.headers.origin;
   if (whitelist.indexOf(origin) > -1) {
     res.setHeader("Access-Control-Allow-Origin", origin);
