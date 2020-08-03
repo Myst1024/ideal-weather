@@ -42,7 +42,6 @@ function Forecast({ forecastList, preferences }) {
     return days;
   }
 
-  forecastList && console.log(buildDays(forecastList));
   const days = [];
   forecastList &&
     buildDays(forecastList).forEach((day) => {

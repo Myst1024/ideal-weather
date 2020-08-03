@@ -1,13 +1,23 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 function Day({ name, forecasts, preferences }) {
-  const forecastElements = forecasts.map((forecast) => {
+  const forecastElements = forecasts.map((forecast, i) => {
+    let time = new Date(forecast.dt * 1000).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      hour12: true,
+    });
+
+    console.log(forecast);
     return (
-      <div
-        style={{
-          height: calculateForecastBarHeight(preferences, forecast) + "%",
-        }}
-      ></div>
+      <Fragment key={i}>
+        <div
+          className="bar"
+          style={{
+            height: calculateForecastBarHeight(preferences, forecast) + "%",
+          }}
+        ></div>
+        <div className="time">{time}</div>
+      </Fragment>
     );
   });
 
