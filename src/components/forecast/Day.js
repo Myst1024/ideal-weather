@@ -9,7 +9,7 @@ function Day({ name, forecasts, preferences }) {
 
     console.log(forecast);
     return (
-      <Fragment key={i}>
+      <div className="day-forecasts-segment" key={i}>
         <div
           className="bar"
           style={{
@@ -17,7 +17,7 @@ function Day({ name, forecasts, preferences }) {
           }}
         ></div>
         <div className="time">{time}</div>
-      </Fragment>
+      </div>
     );
   });
 
