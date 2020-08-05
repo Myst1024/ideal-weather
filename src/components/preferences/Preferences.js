@@ -1,6 +1,7 @@
 import React from "react";
 import "./Preferences.scss";
 import Slider from "@material-ui/core/Slider";
+import TextField from "@material-ui/core/TextField";
 
 function Preferences({
   userRain,
@@ -24,12 +25,14 @@ function Preferences({
       <div className="zipcode">
         <div className="label">Enter your ZIP code:</div>
         <div className="sub-label">(US-only, for now)</div>
-        <input
-          type="text"
+        <TextField
+          id="outlined-basic"
+          autoComplete="section-blue shipping postal-code"
           value={zip}
           onChange={(e) => handleZipChange(e)}
-          autoComplete="section-blue shipping postal-code"
-        ></input>
+          variant="outlined"
+          className="zip-input"
+        />
         <div className="zip-city">{city.name}</div>
       </div>
       <div className="preferences-slider">
