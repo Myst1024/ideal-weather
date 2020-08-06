@@ -62,10 +62,12 @@ function App() {
           handleZipChange={handleZipChange}
           city={forecast.city || ""}
         />
-        <Forecast
-          forecastList={forecast.list}
-          preferences={{ userTemperature, userHumidity, userWind, userRain }}
-        />
+        {zip.length === 5 && (
+          <Forecast
+            forecastList={forecast.list}
+            preferences={{ userTemperature, userHumidity, userWind, userRain }}
+          />
+        )}
       </div>
     </div>
   );

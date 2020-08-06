@@ -35,44 +35,46 @@ function Preferences({
         />
         <div className="zip-city">{city.name}</div>
       </div>
-      <div className="preferences-slider">
-        <div className="label">Temperature (F)</div>
-        <Slider
-          value={userTemperature}
-          valueLabelDisplay="on"
-          onChange={(e, v) => handleSliderChange(e, v, setUserTemperature)}
-          aria-labelledby="range-slider"
-        />
-      </div>
-      <div className="preferences-slider">
-        <div className="label">Humidity (%)</div>
+      <div className="sliders">
+        <div className="preferences-slider">
+          <div className="label">Temperature (F)</div>
+          <Slider
+            value={userTemperature}
+            valueLabelDisplay="on"
+            onChange={(e, v) => handleSliderChange(e, v, setUserTemperature)}
+            aria-labelledby="range-slider"
+          />
+        </div>
+        <div className="preferences-slider">
+          <div className="label">Humidity (%)</div>
 
-        <Slider
-          value={userHumidity}
-          valueLabelDisplay="on"
-          onChange={(e, v) => handleSliderChange(e, v, setUserHumidity)}
-          aria-labelledby="range-slider"
-        />
-      </div>
-      <div className="preferences-slider">
-        <div className="label">Wind (MPH)</div>
+          <Slider
+            value={userHumidity}
+            valueLabelDisplay="on"
+            onChange={(e, v) => handleSliderChange(e, v, setUserHumidity)}
+            aria-labelledby="range-slider"
+          />
+        </div>
+        <div className="preferences-slider">
+          <div className="label">Wind (MPH)</div>
 
-        <Slider
-          value={userWind}
-          valueLabelDisplay="on"
-          onChange={(e, v) => handleSliderChange(e, v, setUserWind)}
-          aria-labelledby="range-slider"
-        />
-      </div>
-      <div className="preferences-slider">
-        <div className="label">Rain (% Chance)</div>
+          <Slider
+            value={userWind}
+            valueLabelDisplay="on"
+            onChange={(e, v) => handleSliderChange(e, v, setUserWind)}
+            aria-labelledby="range-slider"
+          />
+        </div>
+        <div className="preferences-slider">
+          <div className="label">Rain (% Chance)</div>
 
-        <Slider
-          value={userRain}
-          valueLabelDisplay="on"
-          onChange={(e, v) => handleSliderChange(e, v, setUserRain)}
-          aria-labelledby="range-slider"
-        />
+          <Slider
+            value={userRain}
+            valueLabelDisplay="on"
+            onChange={(e, v) => handleSliderChange(e, v, setUserRain)}
+            aria-labelledby="range-slider"
+          />
+        </div>
       </div>
       {/* TODO: Add light/dark based on sunrise/set */}
     </div>
