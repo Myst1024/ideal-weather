@@ -7,7 +7,6 @@ function Day({ name, forecasts, preferences }) {
       hour12: true,
     });
 
-    console.log(forecast);
     return (
       <div className="day-forecasts-segment" key={i}>
         <div
@@ -36,10 +35,9 @@ function Day({ name, forecasts, preferences }) {
  */
 function calculateForecastBarHeight(preferences, forecast) {
   let height = 0;
+  const fahrenheitRange = preferences.userTemperature.map(temp => convertFahrenheit(temp));
   if (
-    forecast.main.temp_min >=
-      convertFahrenheit(preferences.userTemperature[0]) &&
-    forecast.main.temp_max <= convertFahrenheit(preferences.userTemperature[1])
+    isInRange(fahrenheitRange,forecast.main.temp)
   ) {
     height += 30;
   }
@@ -57,6 +55,8 @@ function calculateForecastBarHeight(preferences, forecast) {
   }
   return height;
 }
+
+function getWeightedHeight() {}
 
 /**
  * Convert from Kelvin to Fahrenheit
