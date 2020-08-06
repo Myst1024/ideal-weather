@@ -1,6 +1,7 @@
 import React from "react";
 import Day from "./Day";
 import "./Forecast.scss";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 function Forecast({ forecastList, preferences }) {
   /**
@@ -42,24 +43,28 @@ function Forecast({ forecastList, preferences }) {
     return days;
   }
 
-  const days = [];
-  forecastList &&
-    buildDays(forecastList).forEach((day) => {
-      days.push(
-        <Day
-          key={day.weekday}
-          name={day.weekday}
-          forecasts={day.forecasts}
-          preferences={preferences}
-        />
-      );
-    });
-  return (
-    <div className="forecast card">
-      <h3 className="header">Forecast</h3>
-      <div className="day-list">{days}</div>
-    </div>
-  );
+  if (!forecastList) {
+    return <CircularProgress />;
+  } else {
+    const days = [];
+    forecastList &&
+      buildDays(forecastList).forEach((day) => {
+        days.push(
+          <Day
+            key={day.weekday}
+            name={day.weekday}
+            forecasts={day.forecasts}
+            preferences={preferences}
+          />
+        );
+      });
+    return (
+      <div className="forecast card">
+        <h3 className="header">Forecast</h3>
+        <div className="day-list">{days}</div>
+      </div>
+    );
+  }
 }
 
 export default Forecast;
