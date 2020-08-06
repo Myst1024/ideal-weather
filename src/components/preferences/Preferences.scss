@@ -1,9 +1,9 @@
 .preferences {
   .controls {
     display: flex;
-    align-items: end;
+    align-items: flex-start;
     justify-content: space-evenly;
-
+    flex-wrap: wrap;
     .zipcode {
       width: fit-content;
       .sub-label {
@@ -35,8 +35,9 @@
       border-radius: 16px;
       box-shadow: 2px 3px 9px 0px #0000005c;
       padding: 20px;
-      margin-bottom: 20px;
+      margin: 0 10px 20px;
       max-width: 400px;
+      min-width: 240px;
     }
   }
 }
