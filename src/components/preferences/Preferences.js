@@ -2,6 +2,7 @@ import React from "react";
 import "./Preferences.scss";
 import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
+import PreferenceSlider from "../preferenceSlider/PreferenceSlider";
 
 function Preferences({
   userRain,
@@ -19,60 +20,52 @@ function Preferences({
   const handleSliderChange = (event, newValue, setter) => {
     setter(newValue);
   };
+
   return (
     <div className="preferences card">
       <h3 className="header">Preferences</h3>
-      <div className="zipcode">
-        <div className="label">Enter your ZIP code:</div>
-        <div className="sub-label">(US-only, for now)</div>
-        <TextField
-          id="outlined-basic"
-          autoComplete="section-blue shipping postal-code"
-          value={zip}
-          onChange={(e) => handleZipChange(e)}
-          variant="outlined"
-          className="zip-input"
-        />
-        <div className="zip-city">{city.name}</div>
-      </div>
-      <div className="sliders">
-        <div className="preferences-slider">
-          <div className="label">Temperature (F)</div>
-          <Slider
+      <div className="controls">
+        <div className="zipcode">
+          <div className="label">Enter your ZIP code:</div>
+          <div className="sub-label">(US-only, for now)</div>
+          <TextField
+            id="outlined-basic"
+            autoComplete="section-blue shipping postal-code"
+            value={zip}
+            onChange={(e) => handleZipChange(e)}
+            variant="outlined"
+            className="zip-input"
+          />
+          <div className="zip-city">{city.name}</div>
+        </div>
+        <div className="sliders">
+          <PreferenceSlider
+            title="Temperature"
+            unit="°F"
             value={userTemperature}
-            valueLabelDisplay="on"
-            onChange={(e, v) => handleSliderChange(e, v, setUserTemperature)}
-            aria-labelledby="range-slider"
+            handler={handleSliderChange}
+            setter={setUserTemperature}
           />
-        </div>
-        <div className="preferences-slider">
-          <div className="label">Humidity (%)</div>
-
-          <Slider
+          <PreferenceSlider
+            title="Humidity"
+            unit="%"
             value={userHumidity}
-            valueLabelDisplay="on"
-            onChange={(e, v) => handleSliderChange(e, v, setUserHumidity)}
-            aria-labelledby="range-slider"
+            handler={handleSliderChange}
+            setter={setUserHumidity}
           />
-        </div>
-        <div className="preferences-slider">
-          <div className="label">Wind (MPH)</div>
-
-          <Slider
+          <PreferenceSlider
+            title="Wind"
+            unit=" MPH"
             value={userWind}
-            valueLabelDisplay="on"
-            onChange={(e, v) => handleSliderChange(e, v, setUserWind)}
-            aria-labelledby="range-slider"
+            handler={handleSliderChange}
+            setter={setUserWind}
           />
-        </div>
-        <div className="preferences-slider">
-          <div className="label">Rain (% Chance)</div>
-
-          <Slider
+          <PreferenceSlider
+            title="Rain"
+            unit="% Chance"
             value={userRain}
-            valueLabelDisplay="on"
-            onChange={(e, v) => handleSliderChange(e, v, setUserRain)}
-            aria-labelledby="range-slider"
+            handler={handleSliderChange}
+            setter={setUserRain}
           />
         </div>
       </div>
