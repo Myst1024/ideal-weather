@@ -1,6 +1,5 @@
 import React from "react";
 import "./Preferences.scss";
-import Slider from "@material-ui/core/Slider";
 import TextField from "@material-ui/core/TextField";
 import PreferenceSlider from "../preferenceSlider/PreferenceSlider";
 
@@ -36,7 +35,7 @@ function Preferences({
             variant="outlined"
             className="zip-input"
           />
-          <div className="zip-city">{city.name}</div>
+          <div className="zip-city">{city && city.name}</div>
         </div>
         <div className="sliders">
           <PreferenceSlider

@@ -60,7 +60,7 @@ function App() {
           setUserWind={setUserWind}
           zip={zip}
           handleZipChange={handleZipChange}
-          city={forecast.city || ""}
+          city={forecast && forecast.city}
         />
         {zip.length === 5 && (
           <Forecast

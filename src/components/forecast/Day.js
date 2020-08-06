@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 function Day({ name, forecasts, preferences }) {
   const forecastElements = forecasts.map((forecast, i) => {
@@ -28,6 +28,12 @@ function Day({ name, forecasts, preferences }) {
     </div>
   );
 }
+
+/**
+ * Uses magic to determine how well preferences match a given forecast
+ * @param {Object} preferences
+ * @param {Object} forecast
+ */
 function calculateForecastBarHeight(preferences, forecast) {
   let height = 0;
   if (
@@ -39,7 +45,7 @@ function calculateForecastBarHeight(preferences, forecast) {
   }
 
   if (isInRange(preferences.userHumidity, forecast.main.humidity)) {
-    height += 20; // TODO make an isInRange method to abstract this trash
+    height += 20;
   }
 
   if (isInRange(preferences.userWind, forecast.wind.speed)) {
@@ -51,10 +57,20 @@ function calculateForecastBarHeight(preferences, forecast) {
   }
   return height;
 }
+
+/**
+ * Convert from Kelvin to Fahrenheit
+ * @param {Number} temp
+ */
 function convertFahrenheit(temp) {
   return (temp - 32) / 1.8 + 273.15;
 }
 
+/**
+ * Returns True if value is between first and second values of given range
+ * @param {Array[Number, Number]} range
+ * @param {Number} value
+ */
 function isInRange(range, value) {
   return value >= range[0] && value <= range[1];
 }
