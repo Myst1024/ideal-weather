@@ -34,66 +34,68 @@ function Day({ name, forecasts, preferences }) {
  * @param {Object} forecast
  */
 function calculateForecastBarHeight(preferences, forecast) {
-  const weights = {temp: 75, humidity: 55, wind: 40, rain: 100};
-  let negativesSum = 0;
-
+  //const weights = {temp: 75, humidity: 55, wind: 40, rain: 100};
+  const weights = {temp: 80, humidity: 70, wind: 60, rain:100};
+  let height = 100;
 
   // Temperature
   const kelvinRange = preferences.userTemperature.map(temp => fahrenheitToKelvin(temp));
-  if (
-    !isInRange(kelvinRange,forecast.main.temp)
-  ) {
-    negativesSum += weights.temp;
-  }
-
+  console.log(forecast.main.temp)
+  height -= getWeightedNegatives(kelvinRange, forecast.main.temp) * weights.temp;
+  console.log(height)
+  
   // Humidity
-  if (!isInRange(preferences.userHumidity, forecast.main.humidity)) {
-    negativesSum += weights.humidity;
-  }
-
+  height -= getWeightedNegatives(preferences.userHumidity, forecast.main.humidity) * weights.humidity
+  
   // Wind
-  if (!isInRange(preferences.userWind, forecast.wind.speed)) {
-    negativesSum += weights.wind;
-  }
+  height -= getWeightedNegatives(preferences.userWind, forecast.wind.speed) * weights.wind;
+  
 
   // Rain
   // OpenWeatherApi excludes the rain key if none is expected
   if (!forecast.rain) {
-    negativesSum += 0
-  } else if (!isInRange(preferences.userRain, forecast.rain["3h"])) {
-        negativesSum +=  weights.rain;
+    height += 0
+  } else {
+    height -= getWeightedNegatives(preferences.userRain, forecast.rain["3h"]) * weights.rain;
   }
 
-  const height = Math.max(0,100 - negativesSum)
   return height;
+}
+
+/**
+ * Gets a ratio between a cosine curve with given range and a value
+ * @param {Array[Number]} range 
+ * @param {Number} value 
+ */
+function getCosineCurve(range,value) {
+  console.log(range, value)
+  let lowerBound = range[0] === 0 ? -range[1] : range[0]
+  let upperBound = range[1];
+  // If the lower range is 0, assume that 0 is ideal instead of the mean.  Thus we stretch the sine wave by 2 and shift it back by 1
+  if (range[0] === 0) {
+    lowerBound = range[1] * -1
+    upperBound *= 2
+  }
+
+  return .5 * Math.cos((value - lowerBound) * Math.PI * 2 / upperBound) + .5
 }
 
 /**
  * 
  * @param {Array[Number]} range 
  * @param {Number} value 
- * @param {Number} weight 
  */
-function getWeightedHeight(range, value, weight) {
-  const rangeMean = (range[0] + range[1]) / 2
-
-  if (value <= rangeMean) {
-      return 0
+function getWeightedNegatives(range, value) {
+  if (value <= range[0]) {
+      return 1
+  } else if (value >= range[1]) {
+      return 1
   } else {
-      // calculate ratio between max range and value
-      return weight * ((range[1] - value + 0 ) / (rangeMean - range[0]))
+      return getCosineCurve(range, value)
   }
 }
 
-function getWeightedNegatives(range, value, weight) {
-  const rangeMean = (range[0] + range[1]) / 2
-  if (value <= rangeMean) {
-      return 0
-  } else {
-      // calculate ratio between max range and value
-      return weight - weight * ((range[1] - value + 0 ) / (rangeMean - range[0]))
-  }
-}
+
 
 
 
