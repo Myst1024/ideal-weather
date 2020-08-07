@@ -34,35 +34,61 @@ function Day({ name, forecasts, preferences }) {
  * @param {Object} forecast
  */
 function calculateForecastBarHeight(preferences, forecast) {
+  const weights = {temp: 30, humidity: 20, wind: 20, rain: 30};
   let height = 0;
-  const fahrenheitRange = preferences.userTemperature.map(temp => convertFahrenheit(temp));
+
+
+  // Temperature
+  const kelvinRange = preferences.userTemperature.map(temp => fahrenheitToKelvin(temp));
   if (
-    isInRange(fahrenheitRange,forecast.main.temp)
+    isInRange(kelvinRange,forecast.main.temp)
   ) {
-    height += 30;
+    height += weights.temp;
   }
 
+  // Humidity
   if (isInRange(preferences.userHumidity, forecast.main.humidity)) {
-    height += 20;
+    height += getWeightedHeight(preferences.userHumidity, forecast.main.humidity, weights.humidity);
   }
 
+  // Wind
   if (isInRange(preferences.userWind, forecast.wind.speed)) {
-    height += 20;
+    height += getWeightedHeight(preferences.userWind, forecast.wind.speed, weights.wind);
   }
 
-  if (forecast.rain && isInRange(preferences.userRain, forecast.rain["3h"])) {
-    height += 30;
+  // Rain
+  // OpenWeatherApi excludes the rain key if none is expected
+  if (!forecast.rain) {
+    height += weights.rain
+  } else if (isInRange(preferences.userRain, forecast.rain["3h"])) {
+        height += getWeightedHeight(preferences.userRain, forecast.rain["3h"], weights.rain);
   }
   return height;
 }
 
-function getWeightedHeight() {}
+/**
+ * 
+ * @param {Array[Number]} range 
+ * @param {Number} value 
+ * @param {Number} weight 
+ */
+function getWeightedHeight(range, value, weight) {
+  const rangeMean = (range[0] + range[1]) / 2
+
+if (value <= rangeMean) {
+    return weight
+} else {
+    // calculate ratio between max range and value
+    return (weight * (range[1] - value + 0 ) / (rangeMean - range[0]))
+}
+
+}
 
 /**
  * Convert from Kelvin to Fahrenheit
  * @param {Number} temp
  */
-function convertFahrenheit(temp) {
+function fahrenheitToKelvin(temp) {
   return (temp - 32) / 1.8 + 273.15;
 }
 

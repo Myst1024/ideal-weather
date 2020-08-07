@@ -55,6 +55,7 @@ function Preferences({
           <PreferenceSlider
             title="Wind"
             unit=" MPH"
+            max={30}
             value={userWind}
             handler={handleSliderChange}
             setter={setUserWind}
