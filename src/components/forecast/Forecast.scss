@@ -37,8 +37,22 @@
           .time {
             font-size: 10px;
             font-family: "Oxygen";
+            cursor: default;
+          }
+          &:hover {
+            .bar {
+              background-color: #0096cc;
+            }
+            .time {
+              font-weight: bold;
+            }
           }
         }
+      }
+      .forecast-tooltip {
+        display: flex;
+        flex-direction: row;
+        background-color: red;
       }
     }
   }
