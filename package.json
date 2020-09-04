@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "node-sass": "^4.14.1",
-    "react": "0.0.0-experimental-3d0895557",
+    "react": "0.14.0",
     "react-dom": "0.0.0-experimental-3d0895557",
     "react-scripts": "3.4.1"
   },
