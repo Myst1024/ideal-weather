@@ -12,6 +12,7 @@ function App() {
   const [userWind, setUserWind] = useState([0, 18]);
   const [zip, setZip] = useState("");
   const [forecast, setForecast] = useState({});
+  const [errorFromApi, setErrorFromApi] = useState(false);
 
   const WEATHER_ENDPOINT =
     "https://us-central1-ideal-weather.cloudfunctions.net/getForecast";
@@ -41,9 +42,35 @@ function App() {
    * @param {string} zip
    */
   async function updateForecast(zip) {
-    const res = await axios.get(WEATHER_ENDPOINT, { params: { zip: zip } });
-    setForecast(res.data);
+    setErrorFromApi(false);
+    setForecast({});
+    try {
+      const res = await axios.get(WEATHER_ENDPOINT, { params: { zip: zip } });
+      setForecast(res.data);
+    } catch (err) {
+      setErrorFromApi(true);
+    }
   }
+
+  const ForecastSection = () => {
+    if (zip.length === 5) {
+      if (errorFromApi) {
+        return <span>Error from OpenWeather API. Please try again later.</span>;
+      } else {
+        return (
+          <Forecast
+            forecastList={forecast.list}
+            preferences={{
+              userTemperature,
+              userHumidity,
+              userWind,
+              userRain,
+            }}
+          />
+        );
+      }
+    } else return null;
+  };
 
   return (
     <div className="App">
@@ -62,12 +89,7 @@ function App() {
           handleZipChange={handleZipChange}
           city={forecast && forecast.city}
         />
-        {zip.length === 5 && (
-          <Forecast
-            forecastList={forecast.list}
-            preferences={{ userTemperature, userHumidity, userWind, userRain }}
-          />
-        )}
+        <ForecastSection />
       </div>
     </div>
   );
